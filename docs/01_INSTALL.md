@@ -69,3 +69,9 @@ an easy way to launch Emacs in the future.
 ### Linux
 
 Use the emacs package supplied by your distribution. For example on Fedora, `sudo dnf install emacs`.
+
+
+## Install [all-the-icons](https://github.com/domtronn/all-the-icons.el)
+
+This package provides an installer built-in. Launch Emacs and then type `M-x` (bound to `Option+x` on a Mac) and enter
+the command `all-the-icons-install-fonts`. Once completed, you need to reboot Emacs to see the new icon fonts throughout.
