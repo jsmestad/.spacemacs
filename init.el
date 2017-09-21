@@ -385,8 +385,6 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
     '((t (:inherit font-lock-constant-face)))
     "Syntax highlighting for Ruby constant."
     :group 'ruby)
-
-
   (defun ruby-syntax-highlight-overrides ()
     (font-lock-add-keywords nil
                             '(;; Singleton objects.
@@ -426,6 +424,7 @@ before packages are loaded."
   ;; Display line numbers as 3 digits
   (setq linum-format "\u2502 %3d ")
 
+
   ;; NeoTree
   ;;
   ;; * Do not show hidden files by default
@@ -442,6 +441,7 @@ before packages are loaded."
   (with-eval-after-load 'neotree
     (evil-define-key 'evilified neotree-mode-map (kbd "o") 'neotree-enter)
     (evil-define-key 'evilified neotree-mode-map (kbd "I") 'neotree-hidden-file-toggle))
+
 
   ;; Formatting
   ;;
@@ -486,6 +486,7 @@ before packages are loaded."
   (setq web-mode-engines-alist
         '(("erb"    . "\\.inky-erb\\'")))
 
+
   ;; JavaScript
   ;;
   ;; Indents are 2 spaces
@@ -526,6 +527,7 @@ before packages are loaded."
   (add-hook 'ruby-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
   ;; Don't use spring
   (setq-default rspec-use-spring-when-possible nil)
+
 
   ;; Patches / Fixes
   ;;
