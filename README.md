@@ -1,4 +1,6 @@
-# `.spacemacs` configuration
+# .spacemacs configuration
+
+For those Homebot folks who want to use [Spacemacs](http://spacemacs.org).
 
 ## Getting Started
 
