@@ -152,6 +152,7 @@ It should only modify the values of Spacemacs settings."
                          flatland
                          subatomic256
                          jellybeans-plus
+                         tango-plus
                          )
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
