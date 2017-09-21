@@ -35,25 +35,47 @@ This function should only modify configuration layer settings."
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     helm
-     ;; auto-completion
-     ;; better-defaults
+
+
+     ;; Languages
+     csv
+     docker
+     elixir
      emacs-lisp
-     ;; git
-     ;; markdown
-     ;; org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
+     html
+     javascript
+     markdown
+     (ruby :variables
+           ruby-version-manager 'rbenv
+           ruby-test-runner 'rspec)
+     ruby-on-rails
+     sql
+     yaml
+
+     ;; General Layers
+     ;; dash ;; If have Dash.app installed
+     git
+     github
+     helm
      ;; spell-checking
-     ;; syntax-checking
-     ;; version-control
+     syntax-checking
+
+     ;; macOS specific integration
+     osx
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+                                      all-the-icons
+                                      spaceline-all-the-icons
+                                      flatland-theme
+                                      subatomic256-theme
+                                      (jellybeans-plus-theme :location (recipe
+                                                                        :fetcher github
+                                                                        :repo "jsmestad/jellybeans-plus-theme"))
+                                      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -125,7 +147,12 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-light)
+   dotspacemacs-themes '(
+                         spacemacs-light
+                         flatland
+                         subatomic256
+                         jellybeans-plus
+                         )
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
    dotspacemacs-colorize-cursor-according-to-state t
@@ -268,7 +295,8 @@ It should only modify the values of Spacemacs settings."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers '(:relative nil
+                                         :size-limit-kb 1000)
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -339,6 +367,45 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
   ;; Set the Emacs customization file path. Must be done here in user-init.
   (setq custom-file "~/.spacemacs.d/custom.el")
+
+  ;; Add /usr/local/bin to $PATH
+  (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+  (setq exec-path (append exec-path '("/usr/local/bin")))
+
+  ;; Ruby Patch (Optional)
+  ;;
+  ;; Patch ruby-mode highlighting
+  (defvar ruby-symbol-face 'ruby-symbol-face)
+  (defface ruby-symbol-face
+    '((t (:inherit ruby-constant-face)))
+    "Syntax highlighting for Ruby symbol."
+    :group 'ruby)
+  (defvar ruby-constant-face 'ruby-constant-face)
+  (defface ruby-constant-face
+    '((t (:inherit font-lock-constant-face)))
+    "Syntax highlighting for Ruby constant."
+    :group 'ruby)
+
+
+  (defun ruby-syntax-highlight-overrides ()
+    (font-lock-add-keywords nil
+                            '(;; Singleton objects.
+                              ("\\(?:^\\|[^.@$:]\\|\\.\\.\\)\\_<\\(self\\|nil\\|true\\|false\\)\\_>"
+                               1 ruby-constant-face)
+                              ;; Symbols.
+                              ("\\(^\\|[^:]\\)\\(:@\\{0,2\\}\\(?:\\sw\\|\\s_\\)+\\)"
+                               (2 ruby-symbol-face)
+                               (3 (unless (and (eq (char-before (match-end 3)) ?=)
+                                               (eq (char-after (match-end 3)) ?>))
+                                    ;; bug#18644
+                                    ruby-symbol-face)
+                                  nil t))
+                              ;; Ruby 1.9-style symbol hash keys.
+                              ("\\(?:^\\s *\\|[[{(,]\\s *\\|\\sw\\s +\\)\\(\\(\\sw\\|_\\)+:\\)[^:]"
+                               (1 (progn (forward-char -1) ruby-symbol-face)))
+                              ))
+    )
+  (add-hook 'ruby-mode-hook 'ruby-syntax-highlight-overrides)
   )
 
 (defun dotspacemacs/user-config ()
@@ -348,8 +415,131 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
+  ;; General Settings
+  ;;
   ;; Different powerline seperator (bar, alternate, nil)
-  (setq powerline-default-separator 'alternate))
+  (setq powerline-default-separator 'alternate)
+  ;; Syntax check on save
+  (setq flycheck-check-syntax-automatically '(mode-enabled save))
+  ;; Do not create .# lockfiles
+  (setq create-lockfiles nil)
+  ;; Display line numbers as 3 digits
+  (setq linum-format "\u2502 %3d ")
 
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
+  ;; NeoTree
+  ;;
+  ;; * Do not show hidden files by default
+  ;; * Allow resize of the NeoTree window
+  ;; * Set window width default
+  ;; * Auto indent at point when navigating
+  ;; * Use all-the-icons for NeoTree
+  (setq neo-show-hidden-files nil
+        neo-window-fixed-size nil
+        neo-window-width 32
+        neo-auto-indent-point t
+        neo-theme 'icons)
+  ;; Use `o` and `I` in NeoTree and mimic NERDTree
+  (with-eval-after-load 'neotree
+    (evil-define-key 'evilified neotree-mode-map (kbd "o") 'neotree-enter)
+    (evil-define-key 'evilified neotree-mode-map (kbd "I") 'neotree-hidden-file-toggle))
+
+  ;; Formatting
+  ;;
+  ;; Show trailing whitespace
+  (setq show-trailing-whitespace t)
+  ;; Turn off tabs and set width to 2
+  (setq-default indent-tabs-mode nil
+                tab-width 2)
+
+
+  ;; Mouse
+  ;;
+  ;; Keyboard smooth scrolling: Prevent the awkward "snap to re-center" when
+  ;; the text cursor moves off-screen. Instead, only scroll the minimum amount
+  ;; necessary to show the new line. (A number of 101+ disables re-centering.)
+  (setq scroll-conservatively 101)
+  ;; Optimize mouse wheel scrolling for smooth-scrolling trackpad use.
+  ;; Trackpads send a lot more scroll events than regular mouse wheels,
+  ;; so the scroll amount and acceleration must be tuned to smooth it out.
+  (setq
+   ;; If the frame contains multiple windows, scroll the one under the cursor
+   ;; instead of the one that currently has keyboard focus.
+   mouse-wheel-follow-mouse 't
+   ;; Completely disable mouse wheel acceleration to avoid speeding away.
+   mouse-wheel-progressive-speed nil
+   ;; The most important setting of all! Make each scroll-event move 2 lines at
+   ;; a time (instead of 5 at default). Simply hold down shift to move twice as
+   ;; fast, or hold down control to move 3x as fast. Perfect for trackpads.
+   mouse-wheel-scroll-amount '(2 ((shift) . 4) ((control) . 6)))
+
+
+  ;; Web Mode
+  ;;
+  ;; Formatting
+  (setq-default css-indent-offset 2
+                web-mode-markup-indent-offset 2
+                web-mode-css-indent-offset 2
+                web-mode-code-indent-offset 2
+                web-mode-attr-indent-offset 2)
+  ;; Support inky-rb by making `.inky-erb` extension render like ERB
+  (add-to-list 'auto-mode-alist '("\\.inky-erb\\'" . web-mode))
+  (setq web-mode-engines-alist
+        '(("erb"    . "\\.inky-erb\\'")))
+
+  ;; JavaScript
+  ;;
+  ;; Indents are 2 spaces
+  (setq-default js2-basic-offset 2
+                js-indent-level 2)
+  ;; Configure js2-mode to ignore certain warnings for .spec.js files
+  (with-eval-after-load "js2-mode"
+    (setq-default js2-ignored-warnings
+                  '("msg.return.inconsistent" "msg.anon.no.return.value" "msg.no.return.value"))
+    (make-variable-buffer-local 'js2-ignored-warnings)
+    (defun my-js2-test-file-setup ()
+      (when (string-match-p ".spec.js$" (buffer-file-name))
+        (push "msg.no.side.effects" js2-ignored-warnings)))
+    (add-hook 'js2-mode-hook 'my-js2-test-file-setup))
+  ;; Use ESLint over JSHint (requires `npm install -g eslint`)
+  ;; Use local ESlint from project's node_modules before using global
+  ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
+  (setq-default flycheck-disabled-checkers
+                (append flycheck-disabled-checkers '(javascript-jshint)))
+  (defun my/use-eslint-from-node-modules ()
+    (let* ((root (locate-dominating-file
+                  (or (buffer-file-name) default-directory)
+                  "node_modules"))
+           (eslint (and root
+                        (expand-file-name "node_modules/eslint/bin/eslint.js" root))))
+      (when (and eslint (file-executable-p eslint))
+        (setq-local flycheck-javascript-eslint-executable eslint))))
+  (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+
+
+  ;; Ruby
+  ;;
+  ;; Rubocop should only check for errors (requires `gem install rubocop`)
+  (setq flycheck-rubocop-lint-only t)
+  ;; Adjust tab alignment for various statements
+  (setq ruby-align-to-stmt-keywords '(if while unless until begin case for def))
+  ;; Include underscores in word motion
+  (add-hook 'ruby-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+  ;; Don't use spring
+  (setq-default rspec-use-spring-when-possible nil)
+
+  ;; Patches / Fixes
+  ;;
+  ;; Fix problem with mouse-1 click.
+  ;; The cause seems to be related to wid-edit.el + mouse-1-click-follows-link.
+  ;; Fix is to displable mouse-1 clicks.
+  (add-hook 'spacemacs-buffer-mode-hook (lambda () (set (make-local-variable 'mouse-1-click-follows-link) nil)))
+  (add-hook 'prog-mode-hook (lambda () (set (make-local-variable 'mouse-1-click-follows-link) nil)))
+  (add-hook 'prog-mode-hook (lambda () (set (make-local-variable 'mouse-highlight) nil)))
+
+
+  ;; Additional
+  ;;
+  ;; Lastly, load custom-file (but only if the file exists).
+  (when (file-exists-p custom-file)
+    (load-file custom-file))
+  )
