@@ -59,6 +59,7 @@ This function should only modify configuration layer settings."
      helm
      ;; spell-checking
      syntax-checking
+     jsmestad-spaceline
 
      ;; macOS specific integration
      osx
@@ -69,7 +70,7 @@ This function should only modify configuration layer settings."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
                                       all-the-icons
-                                      spaceline-all-the-icons
+                                      ;; spaceline-all-the-icons
                                       flatland-theme
                                       subatomic256-theme
                                       (jellybeans-plus-theme :location (recipe
@@ -372,6 +373,10 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;; Add /usr/local/bin to $PATH
   (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
   (setq exec-path (append exec-path '("/usr/local/bin")))
+
+  ;; Ignore Shell warning on startup about ENV
+  (setq exec-path-from-shell-check-startup-files nil)
+
 
   ;; Ruby Patch (Optional)
   ;;
