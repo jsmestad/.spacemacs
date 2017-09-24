@@ -429,7 +429,8 @@ before packages are loaded."
   (setq create-lockfiles nil)
   ;; Display line numbers as 3 digits
   (setq linum-format "\u2502 %3d ")
-
+  ;; Give me more time to enter 'fd'
+  (setq-default evil-escape-delay 0.3)
 
   ;; NeoTree
   ;;
