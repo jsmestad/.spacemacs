@@ -38,6 +38,7 @@ This function should only modify configuration layer settings."
 
 
      ;; Languages
+     shell-scripts
      csv
      docker
      elixir
@@ -53,7 +54,7 @@ This function should only modify configuration layer settings."
      yaml
 
      ;; General Layers
-     ;; dash ;; If have Dash.app installed
+     dash ;; If have Dash.app installed
      git
      github
      ;; helm ;; TODO helm-projectile seems broken?, switching to ivy
