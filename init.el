@@ -56,7 +56,8 @@ This function should only modify configuration layer settings."
      ;; dash ;; If have Dash.app installed
      git
      github
-     helm
+     ;; helm ;; TODO helm-projectile seems broken?, switching to ivy
+     ivy
      ;; spell-checking
      syntax-checking
      jsmestad-spaceline
