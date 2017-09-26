@@ -38,6 +38,7 @@ This function should only modify configuration layer settings."
 
 
      ;; Languages
+     ansible
      shell-scripts
      csv
      docker
@@ -46,14 +47,17 @@ This function should only modify configuration layer settings."
      html
      javascript
      markdown
+     nginx
      (ruby :variables
            ruby-version-manager 'rbenv
            ruby-test-runner 'rspec)
      ruby-on-rails
+     rust
      sql
      yaml
 
      ;; General Layers
+     auto-completion
      dash ;; If have Dash.app installed
      git
      github
@@ -62,6 +66,7 @@ This function should only modify configuration layer settings."
      ;; spell-checking
      syntax-checking
      jsmestad-spaceline
+     ;; themes-megapack ;; Enable if you want to cycle through spacemacs themes
 
      ;; macOS specific integration
      osx
@@ -424,7 +429,7 @@ before packages are loaded."
   ;; General Settings
   ;;
   ;; Different powerline seperator (bar, alternate, nil)
-  (setq powerline-default-separator 'alternate)
+  (setq powerline-default-separator 'bar)
   ;; Syntax check on save
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
   ;; Do not create .# lockfiles
@@ -433,6 +438,8 @@ before packages are loaded."
   (setq linum-format "\u2502 %3d ")
   ;; Give me more time to enter 'fd'
   (setq-default evil-escape-delay 0.3)
+  ;; Prevent the visual selection overriding my system clipboard
+  (fset 'evil-visual-update-x-selection 'ignore)
 
   ;; NeoTree
   ;;
@@ -463,6 +470,8 @@ before packages are loaded."
 
   ;; Mouse
   ;;
+  ;; Disable Mouse, we use a GUI
+  (xterm-mouse-mode -1)
   ;; Keyboard smooth scrolling: Prevent the awkward "snap to re-center" when
   ;; the text cursor moves off-screen. Instead, only scroll the minimum amount
   ;; necessary to show the new line. (A number of 101+ disables re-centering.)
