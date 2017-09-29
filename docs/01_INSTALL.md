@@ -13,7 +13,8 @@ Two fonts are suggested to use with emacs, you can install one or both:
 
 ```
 brew install git # surprised if you don't already have this installed
-brew install ispell # for spell checking, if enabled
+brew install aspell # for spell checking, if enabled
+brew install ripgrep # rg is faster that pt and ag
 brew install ag # for searching, used by helm-ag
 brew install pt # for searching, recommended over Ag
 ```
