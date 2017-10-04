@@ -63,6 +63,7 @@ This function should only modify configuration layer settings."
      github
      ;; helm ;; TODO helm-projectile seems broken?, switching to ivy
      ivy
+     shell
      ;; spell-checking
      syntax-checking
      jsmestad-spaceline
@@ -76,6 +77,7 @@ This function should only modify configuration layer settings."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+                                      direnv
                                       all-the-icons
                                       ;; spaceline-all-the-icons
                                       flatland-theme
@@ -558,6 +560,13 @@ before packages are loaded."
   (add-hook 'spacemacs-buffer-mode-hook (lambda () (set (make-local-variable 'mouse-1-click-follows-link) nil)))
   (add-hook 'prog-mode-hook (lambda () (set (make-local-variable 'mouse-1-click-follows-link) nil)))
   (add-hook 'prog-mode-hook (lambda () (set (make-local-variable 'mouse-highlight) nil)))
+
+
+  ;; direnv (https://direnv.net/)
+  ;; Global enable minor mode
+  ;;
+  (direnv-mode)
+  (setq direnv-always-show-summary t)
 
 
   ;; Additional
