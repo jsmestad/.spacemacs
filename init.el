@@ -64,6 +64,8 @@ This function should only modify configuration layer settings."
      github
      ;; helm ;; TODO helm-projectile seems broken?, switching to ivy
      ivy
+     (org :variables
+          org-enable-github-support t)
      shell
      ;; spell-checking
      syntax-checking
