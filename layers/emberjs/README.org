@@ -1,0 +1,117 @@
+#+TITLE: emberjs layer
+#+CAPTION: logo
+[[file:img/ember.png]]
+
+* Table of Contents                                         :TOC_4_gh:noexport:
+- [[#description][Description]]
+  - [[#features][Features:]]
+- [[#install][Install]]
+    - [[#completion-system][Completion System]]
+- [[#key-bindings][Key bindings]]
+  - [[#file-key-bindings][File key bindings]]
+  - [[#generator-key-bindings][Generator key bindings]]
+  - [[#destroy-the-inverse-of-generate-key-bindings][Destroy (the inverse of generate) key bindings]]
+  - [[#key-bindings-to-build-start-the-server-and-run-tests][Key bindings to build, start the server and run tests]]
+
+* Description
+This enables helpers for working with Ember.js projects.
+
+This also includes [[https://github.com/ronco/ember-yasnippets.el][ember-yasnippets]]. See the README for ember-yansippets for the snippet keys.
+
+To use this, you need to add add a =.dir-locals.el= file with the following in the root of your ember project:
+
+#+BEGIN_SRC emacs-lisp
+  ((nil . ((mode . ember))))
+#+END_SRC
+
+If you do not wish to do the following, you may also just do =M-x ember-mode=, however it will make things easier.
+
+Additionally, temporary backup, autosave, and lockfiles interfere with broccoli watcher, so they need to either be moved out of the way or disabled.
+
+Add the following to your =dotspacemacs/user-config=:
+
+#+BEGIN_SRC emacs-lisp
+(setq backup-directory-alist `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+(setq create-lockfiles nil)
+#+END_SRC
+
+** Features:
+  - Ability to easily switch between various files
+  - Key bindings for generators and also easily revert generator actions
+  - Ability to build, start server, and run tests
+
+* Install
+To use this contribution add it to your =~/.spacemacs=
+
+#+begin_src emacs-lisp
+  (setq-default dotspacemacs-configuration-layers '(emberjs))
+#+end_src
+
+*** Completion System
+    By default this will use =ido=,
+    but it may be configured to use helm by adding the following in your =dotspacemacs/user-config= function:
+ #+BEGIN_SRC emacs-lisp
+  (setq ember-completion-system 'helm)
+ #+END_SRC
+
+* Key bindings
+There is no spacemacs key bindings for this layer. We use the default keybindings, which are listed below.
+
+** File key bindings
+
+| Key binding | Description            |
+|-------------+------------------------|
+| C-c . f c   | ember-open-controller  |
+| C-c . f m   | ember-open-model       |
+| C-c . f o   | ember-open-router      |
+| C-c . f p   | ember-open-component   |
+| C-c . f r   | ember-open-route       |
+| C-c . f j   | ember-open-javascript  |
+| C-c . f t   | ember-open-template    |
+| C-c . f x   | ember-open-mixin       |
+| C-c . f i   | ember-open-initializer |
+| C-c . f u   | ember-open-util        |
+| C-c . f s   | ember-open-service     |
+
+** Generator key bindings
+
+| Key binding | Description                |
+|-------------+----------------------------|
+| C-c . g c   | ember-generate-controller  |
+| C-c . g m   | ember-generate-model       |
+| C-c . g o   | ember-generate-router      |
+| C-c . g p   | ember-generate-component   |
+| C-c . g r   | ember-generate-route       |
+| C-c . g j   | ember-generate-javascript  |
+| C-c . g t   | ember-generate-template    |
+| C-c . g x   | ember-generate-mixin       |
+| C-c . g i   | ember-generate-initializer |
+| C-c . g u   | ember-generate-util        |
+| C-c . g s   | ember-generate-service     |
+| C-c . g g   | ember-generate             |
+
+** Destroy (the inverse of generate) key bindings
+
+| Key binding | Description               |
+|-------------+---------------------------|
+| C-c . d c   | ember-destroy-controller  |
+| C-c . d m   | ember-destroy-model       |
+| C-c . d o   | ember-destroy-router      |
+| C-c . d p   | ember-destroy-component   |
+| C-c . d r   | ember-destroy-route       |
+| C-c . d j   | ember-destroy-javascript  |
+| C-c . d t   | ember-destroy-template    |
+| C-c . d x   | ember-destroy-mixin       |
+| C-c . d i   | ember-destroy-initializer |
+| C-c . d u   | ember-destroy-util        |
+| C-c . d s   | ember-destroy-service     |
+| C-c . d g   | ember-destroy             |
+
+** Key bindings to build, start the server and run tests
+
+| Key binding | Description            |
+|-------------+------------------------|
+| C-c . r b   | ember-build            |
+| C-c . r s   | ember-serve-or-display |
+| C-c . r t   | ember-test             |
