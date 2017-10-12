@@ -46,7 +46,8 @@ This function should only modify configuration layer settings."
      emacs-lisp
      html
      javascript
-     markdown
+     (markdown :variables
+               markdown-live-preview-engine 'vmd)
      nginx
      (ruby :variables
            ruby-version-manager 'rbenv
@@ -63,6 +64,8 @@ This function should only modify configuration layer settings."
      github
      ;; helm ;; TODO helm-projectile seems broken?, switching to ivy
      ivy
+     (org :variables
+          org-enable-github-support t)
      shell
      ;; spell-checking
      syntax-checking
@@ -442,6 +445,9 @@ before packages are loaded."
   (setq-default evil-escape-delay 0.3)
   ;; Prevent the visual selection overriding my system clipboard
   (fset 'evil-visual-update-x-selection 'ignore)
+  ;; Fix Ivy selection to be optional
+  (setq ivy-use-selectable-prompt t)
+
 
   ;; NeoTree
   ;;
@@ -492,6 +498,13 @@ before packages are loaded."
    ;; fast, or hold down control to move 3x as fast. Perfect for trackpads.
    mouse-wheel-scroll-amount '(2 ((shift) . 4) ((control) . 6)))
 
+
+  ;; Org Mode
+  ;;
+  ;; Automatically add project todo items to agenda
+  ;; (with-eval-after-load 'org-agenda
+  ;;   (require 'org-projectile)
+  ;;   (push (org-projectile:todo-files) org-agenda-files))
 
   ;; Web Mode
   ;;
