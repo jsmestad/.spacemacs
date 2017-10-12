@@ -29,6 +29,7 @@ npm install npm@latest -g
 
 npm install -g tern # needed for javascript auto-completion
 npm install -g eslint # needed for JavaScript error checking
+npm install -g vmd # needed for Markdown rendering
 ```
 
 ### Ruby
