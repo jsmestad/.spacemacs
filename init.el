@@ -46,7 +46,8 @@ This function should only modify configuration layer settings."
      emacs-lisp
      html
      javascript
-     markdown
+     (markdown :variables
+               markdown-live-preview-engine 'vmd)
      nginx
      (ruby :variables
            ruby-version-manager 'rbenv
@@ -495,6 +496,13 @@ before packages are loaded."
    ;; fast, or hold down control to move 3x as fast. Perfect for trackpads.
    mouse-wheel-scroll-amount '(2 ((shift) . 4) ((control) . 6)))
 
+
+  ;; Org Mode
+  ;;
+  ;; Automatically add project todo items to agenda
+  ;; (with-eval-after-load 'org-agenda
+  ;;   (require 'org-projectile)
+  ;;   (push (org-projectile:todo-files) org-agenda-files))
 
   ;; Web Mode
   ;;
