@@ -445,6 +445,8 @@ before packages are loaded."
   (setq-default evil-escape-delay 0.3)
   ;; Prevent the visual selection overriding my system clipboard
   (fset 'evil-visual-update-x-selection 'ignore)
+  ;; When pasting content, replace the highlighted region instead of inserting before
+  (delete-selection-mode 1)
   ;; Fix Ivy selection to be optional
   (setq ivy-use-selectable-prompt t)
 
