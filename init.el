@@ -88,6 +88,7 @@ This function should only modify configuration layer settings."
                                       (jellybeans-plus-theme :location (recipe
                                                                         :fetcher github
                                                                         :repo "jsmestad/jellybeans-plus-theme"))
+                                      apropospriate-theme
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -165,7 +166,8 @@ It should only modify the values of Spacemacs settings."
                          flatland
                          subatomic256
                          jellybeans-plus
-                         tango-plus
+                         apropospriate-dark
+                         apropospriate-light
                          )
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -173,7 +175,7 @@ It should only modify the values of Spacemacs settings."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Hack"
-                               :size 15.0
+                               :size 13.0
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -449,6 +451,8 @@ before packages are loaded."
   (delete-selection-mode 1)
   ;; Fix Ivy selection to be optional
   (setq ivy-use-selectable-prompt t)
+  ;; Disable line truncation by default. Use `SPC t l`
+  (setq-default truncate-lines 't)
 
 
   ;; NeoTree
