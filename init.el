@@ -85,6 +85,7 @@ This function should only modify configuration layer settings."
                                       ;; spaceline-all-the-icons
                                       flatland-theme
                                       subatomic256-theme
+                                      (company-eshell-autosuggest :fetcher github :repo "dieggsy/company-eshell-autosuggest")
                                       (jellybeans-plus-theme :location (recipe
                                                                         :fetcher github
                                                                         :repo "jsmestad/jellybeans-plus-theme"))
@@ -512,6 +513,7 @@ before packages are loaded."
   ;;   (require 'org-projectile)
   ;;   (push (org-projectile:todo-files) org-agenda-files))
 
+
   ;; Web Mode
   ;;
   ;; Formatting
@@ -524,6 +526,18 @@ before packages are loaded."
   (add-to-list 'auto-mode-alist '("\\.inky-erb\\'" . web-mode))
   (setq web-mode-engines-alist
         '(("erb"    . "\\.inky-erb\\'")))
+
+
+  ;; eshell
+  ;;
+  ;; Add fish-like autocomplete to eshell
+  (add-hook 'eshell-mode-hook 'company-mode)
+  (defun setup-company-eshell-autosuggest ()
+    (with-eval-after-load 'company
+      (setq-local company-backends '(company-eshell-autosuggest))
+      (setq-local company-frontends '(company-preview-frontend))))
+
+  (add-hook 'eshell-mode-hook 'setup-company-eshell-autosuggest)
 
 
   ;; JavaScript
