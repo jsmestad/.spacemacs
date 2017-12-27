@@ -162,8 +162,14 @@ It should only modify the values of Spacemacs settings."
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
                          flatland
+                         darkokai
                          spacemacs-light
+                         flatui
+                         colorsarenice-light
                          jellybeans-plus
+                         soft-morning
+                         monokai
+                         spacemacs-dark
                          )
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
