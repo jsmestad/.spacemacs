@@ -84,12 +84,10 @@ This function should only modify configuration layer settings."
                                       all-the-icons
                                       ;; spaceline-all-the-icons
                                       flatland-theme
-                                      subatomic256-theme
                                       (company-eshell-autosuggest :fetcher github :repo "dieggsy/company-eshell-autosuggest")
                                       (jellybeans-plus-theme :location (recipe
                                                                         :fetcher github
                                                                         :repo "jsmestad/jellybeans-plus-theme"))
-                                      apropospriate-theme
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -163,12 +161,9 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         spacemacs-light
                          flatland
-                         subatomic256
+                         spacemacs-light
                          jellybeans-plus
-                         apropospriate-dark
-                         apropospriate-light
                          )
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
