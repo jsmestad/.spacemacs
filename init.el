@@ -165,7 +165,6 @@ It should only modify the values of Spacemacs settings."
                          darkokai
                          spacemacs-light
                          flatui
-                         colorsarenice-light
                          jellybeans-plus
                          soft-morning
                          monokai
