@@ -84,7 +84,7 @@ This function should only modify configuration layer settings."
                                       all-the-icons
                                       ;; spaceline-all-the-icons
                                       flatland-theme
-                                      (company-eshell-autosuggest :fetcher github :repo "dieggsy/company-eshell-autosuggest")
+                                      esh-autosuggest
                                       (jellybeans-plus-theme :location (recipe
                                                                         :fetcher github
                                                                         :repo "jsmestad/jellybeans-plus-theme"))
