@@ -600,6 +600,8 @@ before packages are loaded."
   (add-to-list 'auto-mode-alist '("\\.inky-erb\\'" . web-mode))
   (setq web-mode-engines-alist
         '(("erb"    . "\\.inky-erb\\'")))
+  ;; Close on </ and >
+  (setq web-mode-auto-close-style 2)
 
 
   ;; eshell
