@@ -33,7 +33,8 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(go
+     rust
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -549,6 +550,9 @@ before packages are loaded."
   ;; Turn on autocompletion with company mode
   (global-company-mode t)
 
+  ;; Backspace
+  (customize-set-variable 'normal-erase-is-backspace-mode t)
+
 
   ;; NeoTree
   ;;
@@ -653,8 +657,8 @@ before packages are loaded."
   ;; Use ESLint over JSHint (requires `npm install -g eslint`)
   ;; Use local ESlint from project's node_modules before using global
   ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
-  (setq-default flycheck-disabled-checkers
-                (append flycheck-disabled-checkers '(javascript-jshint)))
+  ;; (setq-default flycheck-disabled-checkers
+  ;;               (append flycheck-disabled-checkers '(javascript-jshint)))
   (defun my/use-eslint-from-node-modules ()
     (let* ((root (locate-dominating-file
                   (or (buffer-file-name) default-directory)
@@ -676,7 +680,10 @@ before packages are loaded."
   (add-hook 'ruby-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
   ;; Don't use spring
   ;; (setq-default rspec-use-spring-when-possible nil)
-
+  (defun my-compilation-mode-hook ()
+    (setq truncate-lines nil) ;; automatically becomes buffer local
+    (set (make-local-variable 'truncate-partial-width-windows) nil))
+  (add-hook 'compilation-mode-hook 'my-compilation-mode-hook)
 
   ;; Patches / Fixes
   ;;
